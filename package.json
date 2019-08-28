@@ -1,0 +1,28 @@
+{
+  "name": "jsoncontrol",
+  "version": "1.0.0",
+  "description": "App for edit and visualize json",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sngvahmed/JsonConvert.git"
+  },
+  "author": "Ahmed Nasser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sngvahmed/JsonConvert/issues"
+  },
+  "homepage": "https://github.com/sngvahmed/JsonConvert#readme",
+  "devDependencies": {
+    "electron": "^6.0.5"
+  },
+  "dependencies": {
+    "clipboard": "^2.0.4",
+    "jquery": "^3.4.1",
+    "jquery.json-viewer": "^1.4.0",
+    "json2csv": "^4.5.2"
+  }
+}
