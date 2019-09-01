@@ -3,8 +3,37 @@
   "version": "1.0.0",
   "description": "App for edit and visualize json",
   "main": "main.js",
+  "build": {
+    "appId": "jsonConverter",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
+  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -17,7 +46,8 @@
   },
   "homepage": "https://github.com/sngvahmed/JsonConvert#readme",
   "devDependencies": {
-    "electron": "^6.0.5"
+    "electron": "^6.0.5",
+    "electron-builder": "^21.2.0"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
