@@ -1,28 +1,31 @@
-const { clipboard, remote } = require('electron')
+const { clipboard, remote } = require('electron');
 const fs = require('fs');
-const { Parser } = require('json2csv');
-const jsonOriginal = require("./template");
 const dialog = remote.dialog;
 WIN = remote.getCurrentWindow();
 
 const keyFilters = [];
 
 var json;
+var jsonOriginal;
 
 $('#paste').click(() => {
     try {
         const t = clipboard.readText('clipboard');
-        json = JSON.parse(t);
-        applyJson();
+        jsonOriginal = JSON.parse(t);
+        reset();
     } catch (err) {
         console.log("Not Valid Json");
     }
 });
 
-var init = () => {
-    
-}
+$('#reset').click(() => {
+    reset();
+})
 
+var reset = () => {
+    json = JSON.parse(JSON.stringify(jsonOriginal));
+    applyJson();
+}
 
 var filterJson = () => {
     keyFilters.filter(k => k.selected).forEach(k => {
@@ -44,17 +47,18 @@ var actions = {
         var keys = key.split("|").splice(1);
 
         var hideAction = (obj, d) => {
-            if (obj[keys[d]] == undefined) return;
+            if (obj == undefined) return;
 
-            if (d == keys.length - 1) {
-                delete obj[keys[d]];
-                return;
-            }
-            if (obj[keys[d]].length == undefined) {
+            if (obj.length == undefined) {
+                if (d == keys.length - 1) {
+                    delete obj[keys[d]];
+                    return;
+                }
+
                 hideAction(obj[keys[d]], d + 1);
             } else {
-                obj[keys[d]].forEach((ob) => {
-                    hideAction(ob, d + 1);
+                obj.forEach((ob) => {
+                    hideAction(ob, d);
                 });
             }
         }
@@ -147,6 +151,7 @@ var getKeysOptionsHtml = () => {
 };
 
 var selectKey = (v) => {
+    console.log("select =>", v);
     const i = keyFilters.indexOf(v);
     keyFilters[i].selected = true;
     keyFilters[i].filtersAction = ["hide"];

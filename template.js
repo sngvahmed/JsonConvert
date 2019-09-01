@@ -1,4 +1,4 @@
-module.exports = [
+[
   { 
 
      "widget-title" : "Navigation",
@@ -54,4 +54,4 @@ module.exports = [
         "url" : "contact.html"
       }
     ]
-  }];
+}]

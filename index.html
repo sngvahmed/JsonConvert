@@ -11,12 +11,14 @@
 	<body>
 		<div class="container" style="margin-top:20px">
 			<div class="row">
-				<div class="col-md-6 ">
+				<div class="col-md-6">
 			    	<button id="paste" type="button" style="height: 100%;" class="float-left btn btn-outline-primary ">paste json into editor</button>
 				</div>
 				<div class="col-md-6 ">
 					<div class="btn-group dropleft float-right">
 						<img 
+						title= "reset"
+						id="reset"
 						src="filter.svg" 
 						alt="Filter"
 						height="50px"
@@ -37,9 +39,11 @@
 			</div>
 
 			<pre id="json-renderer"></pre>
-			
-			<button id="saveCsv" type="button" class="btn btn-outline-success">Save Csv</button>
-			
+			<div class="row">
+				<div class="col-md-12">
+					<button id="saveCsv" type="button" class="btn btn-outline-success">Save Csv</button>
+				</div>
+			</div>
 		</div>
 
 
