@@ -6,26 +6,21 @@ const dialog = remote.dialog;
 WIN = remote.getCurrentWindow();
 
 const keyFilters = [];
-let deletedItem = [];
 
 var json;
 
 $('#paste').click(() => {
     try {
         const t = clipboard.readText('clipboard');
-        value = JSON.parse(t);
-        buildKeysArray(value);
-        $('#json-renderer').jsonViewer(value);
+        json = JSON.parse(t);
+        applyJson();
     } catch (err) {
         console.log("Not Valid Json");
     }
 });
 
 var init = () => {
-    console.log("############ init ###########");
-    console.log("############ reset ###########");
-    json = JSON.parse(JSON.stringify(jsonOriginal));
-    applyJson();
+    
 }
 
 
@@ -35,7 +30,7 @@ var filterJson = () => {
             actions[action](k.id);
         });
     });
-    deletedItem
+
     keyFilters.length = 0;
     keysName = "";
 
@@ -140,22 +135,21 @@ var buildKeysArray = (json, keysName, htmlId) => {
             buildKeysArray(key, keysName, htmlId); 
         });
     }
-}
+};
 
 var getKeysOptionsHtml = () => {
     $('#keys-options').html(keyFilters.filter(k => k.selected == false).map(k => k.toString()).join(""));
     keyFilters.forEach(function(k) {
         $(`#${k.htmlId}`).click(function(){
             selectKey(this)
-        }.bind(k))
-    })
-}
+        }.bind(k));
+    });
+};
 
 var selectKey = (v) => {
     const i = keyFilters.indexOf(v);
     keyFilters[i].selected = true;
     keyFilters[i].filtersAction = ["hide"];
     applyJson();
-}
+};
 
-init();
