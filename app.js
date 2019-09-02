@@ -12,6 +12,10 @@ let keyAction = {};
 var json;
 var jsonOriginal;
 
+
+
+
+
 $('#paste').click(() => {
     try {
         const t = clipboard.readText('clipboard');
@@ -20,7 +24,8 @@ $('#paste').click(() => {
         jsonOriginal = JSON.parse(t);
         reset();
     } catch (err) {
-        console.log("Not Valid Json");
+        toastr.info('Please select json and copy it then click in paste icon', 'Please Follow');
+        toastr.error('There is no json in clipboard.', 'Not valid Json');
     }
 });
 
@@ -28,6 +33,7 @@ $('#reset').click(() => {
     try {
         reset();
     } catch (err) {
+        toastr.error(`Can't reset json clipboard check you copied clipboard`, 'Error');
         console.error("can't format json", err);
     }
 });
@@ -36,7 +42,7 @@ $('#runFilter').click(() => {
     if (keyFilters.filter(k => k.selected).length == Object.keys(keyAction).length)
         applyJson();
     else
-        console.log("length not equal")
+        toastr.warning(`Please select all operation`, 'Warning');
 })
 
 var reset = () => {
@@ -49,7 +55,6 @@ var reset = () => {
 
 
 var filterJson = () => {
-    console.log("FilterJson", json, keyFilters, actions);
     keyFilters.filter(k => k.selected).forEach(k => {
         console.log(keyAction[k.htmlId], actions[keyAction[k.htmlId]])
         actions[keyAction[k.htmlId]] && actions[keyAction[k.htmlId]](k.id);
@@ -63,9 +68,10 @@ var filterJson = () => {
 };
 
 var applyJson = () => {
-    console.log("############ applyJson ###########", json);
     filterJson();
     $('#json-renderer').jsonViewer(json);
+
+    toastr.success("Progress Done");
 };
 
 var actions = {
@@ -87,11 +93,11 @@ var actions = {
                     hideAction(ob, d);
                 });
             }
-        }
+        };
 
         hideAction(json, 0);
     }
-}
+};
 
 var buildKeysArray = (json, keysName, htmlId) => {
     if (typeof json != "object") return;
@@ -246,12 +252,11 @@ $('#saveCsv').click(() => {
                 rowDelimiter: ','
             }, function (err, csv) {
                 if (err) return console.log(err);
-                console.log(csv);
                 fs.writeFile(fileName, csv, (err) => {
                     if (err) {
-                        alert("An error ocurred creating the file " + err.message)
+                        toastr.err(err.message, "An error ocurred creating the file ");
                     }
-                    alert("The file has been succesfully saved");
+                    toastr.success("The file has been succesfully saved");
                 });
             });
 
