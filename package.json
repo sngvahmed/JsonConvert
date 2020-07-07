@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/sngvahmed/JsonConvert#readme",
   "devDependencies": {
-    "electron": "^6.0.5",
+    "electron": "^9.1.0",
     "electron-builder": "^21.2.0"
   },
   "dependencies": {
